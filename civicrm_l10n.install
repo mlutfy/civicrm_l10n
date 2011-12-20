@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the civicrm_l10n module.
+ */
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function civicrm_l10n_uninstall() {
+  db_query("DELETE FROM {locales_target} WHERE lid IN (SELECT lid FROM {locales_source} WHERE location LIKE 'CRM/%')");
+  db_query("DELETE FROM {locales_source} WHERE location like 'CRM%'");
+}
+
