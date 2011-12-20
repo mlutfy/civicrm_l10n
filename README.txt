@@ -1,5 +1,7 @@
 This module manages the CiviCRM translations using the Drupal locale module.
 
+Download: https://github.com/mlutfy/civicrm_l10n
+
 INSTALL:
 --------
 
