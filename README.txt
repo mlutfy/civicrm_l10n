@@ -1,5 +1,9 @@
 This module manages the CiviCRM translations using the Drupal locale module.
 
+It is an experiment to see if it can be more efficient (performance) and make
+it easier for site administrators to translate strings from CiviCRM extensions
+or custom Smarty templates.
+
 Download: https://github.com/mlutfy/civicrm_l10n
 
 INSTALL:
