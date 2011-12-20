@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Implementation of hook_civicrm_config()
+ */
+function civicrm_l10n_civicrm_config(&$config) {
+  $config =& CRM_Core_Config::singleton();
+  $config->customTranslateFunction = 'civicrm_l10n_ts';
+}
+
+function civicrm_l10n_ts($text, $params = array()) {
+  static $i18n = NULL;
+
+  if (! $i18n) {
+    $i18n =& CRM_Core_I18n::singleton();
+  }
+
+  // CiviCRM uses the form: "new contact: %1"
+  // Drupal  uses the form: "new contact: !1" (if we don't want special formatting)
+  $fixedparams = array();
+
+  if (count($params)) {
+    foreach ($params as $key => $val) {
+      $fixedparams['%' . $key] = $val;
+
+      // replace %1 to !1 in the original string. using multiple str_replace calls
+      // instead of one preg_replace for all parameter, since most strings only have
+      // placeholder, so this should be more efficient in most cases.
+      $text = str_replace('%' . $key, '!' . $key, $text);
+    }
+  }
+
+  return t($text, $fixedparams);
+}
+
