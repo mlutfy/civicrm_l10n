@@ -21,7 +21,7 @@ function civicrm_l10n_ts($text, $params = array()) {
 
   if (count($params)) {
     foreach ($params as $key => $val) {
-      $fixedparams['%' . $key] = $val;
+      $fixedparams['!' . $key] = $val;
 
       // replace %1 to !1 in the original string. using multiple str_replace calls
       // instead of one preg_replace for all parameter, since most strings only have
