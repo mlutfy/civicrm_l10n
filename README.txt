@@ -6,6 +6,12 @@ or custom Smarty templates.
 
 Download: https://github.com/mlutfy/civicrm_l10n
 
+KNOWN ISSUES:
+-------------
+
+- Drupal complains that 8 strings have illegal HTML (on aprox. 10 230 strings).
+- Plural forms might not be managed correctly (not tested).
+
 INSTALL:
 --------
 
