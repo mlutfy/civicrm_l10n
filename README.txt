@@ -9,7 +9,8 @@ Download: https://github.com/mlutfy/civicrm_l10n
 KNOWN ISSUES:
 -------------
 
-- Drupal complains that 8 strings have illegal HTML (on aprox. 10 230 strings).
+- Drupal may complain that some strings have illegal HTML.
+  See the section "non-imported strings" below for more information.
 - Plural forms might not be managed correctly (not tested).
 
 INSTALL:
@@ -56,4 +57,29 @@ UN-INSTALL:
 
 * Un-installing will attempt to clean out the locales_source and locales_target
   database tables by removing all strings with a "location" in "CRM/%".
+
+NON-IMPORTED STRINGS:
+---------------------
+
+After the importation of strings (uploading the .po file in the Drupal interface),
+there may be a warning that some strings were not imported due to illegal HTML.
+
+These are often caused by errors in the translation. For example, links that
+were not closed. It may also be minor formatting elements, such as inserting
+to many spaces in a link element, for example: <a href = "/" > hello </a>
+should be compacted: <a href="/">hello</a>.
+
+The only way I found to get a list of those strings is to temporarely modify
+the core of Drupal to get a more explicit error message:
+
+* File: includes/locale.inc, in function _locale_import_one_string_db()
+
+    if ($textgroup == "default" && !locale_string_is_safe($translation)) {
+      $report['skips']++;
+      $lid = 0;
+      watchdog('civicrm_l10n', 'Illegal string: ' . check_plain($translation)); // add this
+    }
+
+You will then be able to see the strings from the "error report" (watchdog),
+and fix them on Transifex.
 
