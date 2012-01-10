@@ -12,6 +12,8 @@ KNOWN ISSUES:
 - Drupal may complain that some strings have illegal HTML.
   See the section "non-imported strings" below for more information.
 - Plural forms might not be managed correctly (not tested).
+- State/province translation is not working? (civicrm not sending the gettext context?)
+- .po file must be converted from %1 to !1 before import?
 
 INSTALL:
 --------
