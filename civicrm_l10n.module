@@ -33,3 +33,48 @@ function civicrm_l10n_ts($text, $params = array()) {
   return t($text, $fixedparams);
 }
 
+/**
+ * Implementation of hook_civicrm_buildForm()
+ */
+function civicrm_l10n_civicrm_buildForm($formName, &$form) {
+  // CRM/Core/PseudoConstant.php country and provinces do not sort using utf-8
+  // so, for example, États-Unis (USA) would end up at the end of the list.
+  // Requires the PECL "intl" package: apt-get install php5-intl
+  if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
+    $lcMessages = CRM_Utils_System::getUFLocale();
+    $bltID = $form->_bltID;
+
+    if ($lcMessages && $lcMessages != 'en_US' && class_exists('Collator')) {
+      // Country list in the billing info
+      if ($form->elementExists('billing_country_id-'. $bltID)) {
+        $countries = CRM_Core_PseudoConstant::country();
+
+        $collator = new Collator($lcMessages . '.utf8');
+        $collator->asort($countries);
+
+        // could not find the correct quickform way to remove options
+        $e = $form->getElement('billing_country_id-'. $bltID);
+        $form->_elements[$form->_elementIndex['billing_country_id-'. $bltID]]->_options = array();
+        $e->loadArray(array('' => t('- select -')));
+        $e->loadArray($countries);
+      }
+
+      // Country list in the "on behalf of an organisation" profile
+      if ($form->_onbehalf && $form->elementExists('onbehalf[country-3]')) {
+        $countries = CRM_Core_PseudoConstant::country();
+
+        $collator = new Collator($lcMessages . '.utf8');
+        $collator->asort($countries);
+
+        // could not find the correct quickform way to remove options
+        $e = $form->getElement('onbehalf[country-3]');
+        $form->_elements[$form->_elementIndex['onbehalf[country-3]']]->_options = array();
+        $e->loadArray(array('' => t('- select -')));
+        $e->loadArray($countries);
+      }
+
+      // TODO: state/province sort?
+    }
+  }
+}
+
