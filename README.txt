@@ -14,6 +14,7 @@ KNOWN ISSUES:
 - Plural forms might not be managed correctly (not tested).
 - State/province translation is not working? (civicrm not sending the gettext context?)
 - .po file must be converted from %1 to !1 before import?
+- see CRM-9531 for the ordering or states/provinces and countries (ex: billing info in donation forms)
 
 INSTALL:
 --------
