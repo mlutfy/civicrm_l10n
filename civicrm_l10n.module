@@ -51,6 +51,7 @@ function civicrm_l10n_civicrm_buildForm($formName, &$form) {
   // CRM/Core/PseudoConstant.php country and provinces do not sort using utf-8
   // so, for example, États-Unis (USA) would end up at the end of the list.
   // Requires the PECL "intl" package: apt-get install php5-intl
+/*
   if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
     $lcMessages = CRM_Utils_System::getUFLocale();
     $bltID = $form->_bltID;
@@ -87,5 +88,6 @@ function civicrm_l10n_civicrm_buildForm($formName, &$form) {
       // TODO: state/province sort?
     }
   }
+*/
 }
 
