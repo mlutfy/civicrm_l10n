@@ -30,7 +30,18 @@ function civicrm_l10n_ts($text, $params = array()) {
     }
   }
 
-  return t($text, $fixedparams);
+  $text = t($text, $fixedparams);
+
+  if (isset($params['escape'])) {
+    if ($params['escape'] == 'js') {
+      $text = mysql_escape_string($text);
+    }
+    elseif ($params['escape'] == 'js') {
+      $text = addcslashes($text, "'");
+    }
+  }
+
+  return $text;
 }
 
 /**
