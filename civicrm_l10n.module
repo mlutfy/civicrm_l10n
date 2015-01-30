@@ -20,6 +20,14 @@ function civicrm_l10n_ts($text, $params = array()) {
   $fixedparams = array();
 
   if (count($params)) {
+    if (isset($params['count'])) {
+      if ($params['count'] != 1) {
+        $fixedparams['!count'] = $params['count'];
+        $text = str_replace('%count', '!count', $params['plural']);
+        unset($params['count']);
+      }
+    }
+
     foreach ($params as $key => $val) {
       $fixedparams['!' . $key] = $val;
 
